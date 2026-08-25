@@ -1,5 +1,11 @@
 You can allow users to pay multiple payees in a single operation using the additionalPayees parameter when creating a payment request.
 
+### Mixed bulk with locked movements
+
+Each `additionalPayees` item may optionally include its own `lockedUntil`. That movement is then held on a dedicated technical wallet and exposes its own locked payment method after authorization. Items without `lockedUntil` follow the normal bulk flow. The top-level `lockedUntil`, when present, applies only to the main (residual) movement and is not propagated to additional payees.
+
+The response identifies every movement with its `id`; locked movements additionally expose `lockedUntil`, `status`, and `lockedPaymentMethod` when available. Movements are independent: release or refund one locked movement does not change the others.
+
 [![](https://mermaid.ink/img/pako:eNqFk81um0AQx18FTQ-5kGgxsGAOkUzanqoqcqxWqris2cFZFXbdZYnsWL70efpUeZIuH66hiRVOszO_-c9_PzhArjhCArVhBj8KttGsyqRjPy405kYo6XxZ9pkUJRYiF0zvF8719a2z4Fy0BCvv2R6xThyPkJfff17h6QU8fJO-u0DPwrfoS1aiM_1_setYru77qg26xGrRjjg7WvXK3-052HG26I0kp8V0spVp7W4wDi5stOCQGN2gCxXqirVLOLRdGZhHrDCDxIZrVtvIHeW_MS3YusS6BQ79mAwKJc1nVoly3_ddLdVaGXXlOk-oOZPMddq-ctA6tTyI52GQR7e7UXGrRdWevyqV7oEPnKNf5K-ZVGmOekwG1M-LYkQy-3qeWHvu6c_NmCxmRTzRHJHvyw4GVrgzY84jPglwxNX4q0GZ49emWk8lT3tqyWMmj_Zmtkz-UKo6XY5WzeYRkoKVtV01W37-Of5lNcrOaiMNJPNo1olAcoAdJF4Y3ZCQ0HlMI0r9yPNd2EMyC2KbpkEc0LmtUhIeXXju5pKbICC2jYRhHAbRPPKpC6wx6mEv85Ot3sgn-5iVHnwc_wL-ZjBd?type=png)](https://mermaid.live/edit#pako:eNqFk81um0AQx18FTQ-5kGgxsGAOkUzanqoqcqxWqris2cFZFXbdZYnsWL70efpUeZIuH66hiRVOszO_-c9_PzhArjhCArVhBj8KttGsyqRjPy405kYo6XxZ9pkUJRYiF0zvF8719a2z4Fy0BCvv2R6xThyPkJfff17h6QU8fJO-u0DPwrfoS1aiM_1_setYru77qg26xGrRjjg7WvXK3-052HG26I0kp8V0spVp7W4wDi5stOCQGN2gCxXqirVLOLRdGZhHrDCDxIZrVtvIHeW_MS3YusS6BQ79mAwKJc1nVoly3_ddLdVaGXXlOk-oOZPMddq-ctA6tTyI52GQR7e7UXGrRdWevyqV7oEPnKNf5K-ZVGmOekwG1M-LYkQy-3qeWHvu6c_NmCxmRTzRHJHvyw4GVrgzY84jPglwxNX4q0GZ49emWk8lT3tqyWMmj_Zmtkz-UKo6XY5WzeYRkoKVtV01W37-Of5lNcrOaiMNJPNo1olAcoAdJF4Y3ZCQ0HlMI0r9yPNd2EMyC2KbpkEc0LmtUhIeXXju5pKbICC2jYRhHAbRPPKpC6wx6mEv85Ot3sgn-5iVHnwc_wL-ZjBd)
 
 The above diagram shows how bulk works.

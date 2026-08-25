@@ -1116,6 +1116,11 @@
                                                                                 "minLength": 5,
                                                                                 "maxLength": 100,
                                                                                 "description": "Remittance information specific to this payee. If not provided, the `remittanceInformation` from the main request will be used."
+                                                                            },
+                                                                            "lockedUntil": {
+                                                                                "type": "string",
+                                                                                "format": "date-time",
+                                                                                "description": "Optional lock deadline for this additional movement. The movement gets its own locked wallet and payment method."
                                                                             }
                                                                         },
                                                                         "required": [
@@ -1147,6 +1152,11 @@
                                                                                 "minLength": 5,
                                                                                 "maxLength": 100,
                                                                                 "description": "Remittance information specific to this payee. If not provided, the `remittanceInformation` from the main request will be used."
+                                                                            },
+                                                                            "lockedUntil": {
+                                                                                "type": "string",
+                                                                                "format": "date-time",
+                                                                                "description": "Optional lock deadline for this additional movement. The movement gets its own locked wallet and payment method."
                                                                             }
                                                                         },
                                                                         "required": [
@@ -1176,6 +1186,11 @@
                                                                                 "minLength": 5,
                                                                                 "maxLength": 100,
                                                                                 "description": "Remittance information specific to this payee. If not provided, the `remittanceInformation` from the main request will be used."
+                                                                            },
+                                                                            "lockedUntil": {
+                                                                                "type": "string",
+                                                                                "format": "date-time",
+                                                                                "description": "Optional lock deadline for this additional movement. The movement gets its own locked wallet and payment method."
                                                                             }
                                                                         },
                                                                         "required": [
@@ -3875,6 +3890,11 @@
                         "format": "uuid",
                         "description": "Unique identifier of the payment request."
                     },
+                    "bulkIntentId": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Identifier of the aggregate bulk intent, when this request is a child movement."
+                    },
                     "appId": {
                         "type": "string",
                         "format": "uuid",
@@ -3937,6 +3957,34 @@
                                 "remittance": {
                                     "type": "string",
                                     "description": "Remittance information used for the additional payee transfer."
+                                },
+                                "id": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "description": "Unique identifier of the movement, when available."
+                                },
+                                "lockedUntil": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "description": "Lock deadline for this movement, when it is locked."
+                                },
+                                "status": {
+                                    "$ref": "#/components/schemas/PaymentRequestStatus",
+                                    "description": "Current status of this movement."
+                                },
+                                "lockedPaymentMethod": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": ["locked"]
+                                        }
+                                    },
+                                    "required": ["id", "type"]
                                 }
                             },
                             "required": [
