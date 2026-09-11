@@ -12,7 +12,7 @@ The response identifies every movement with its `id`; locked movements additiona
 
 The above diagram shows how bulk works.
 We assume the case in which a user wants to pay Beneficiary A for 100€, Beneficiary B for 50€ and Beneficiary C for 25€ and again Beneficiary A for 75€.
-The additionalPayees parameter will be populated like this (you can also specify a per-payee `remittanceInformation`; if omitted, the main request `remittanceInformation` is used):
+The additionalPayees parameter will be populated like this. You can specify a per-payee `remittanceInformation`; for locked movements, when it is omitted, the main request `remittanceInformation` is inherited by that locked movement. Ordinary movements retain the existing bulk remittance behavior.
 
 ```json
 {
