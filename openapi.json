@@ -1301,6 +1301,49 @@
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
                     },
+                    "409": {
+                        "description": "The payment-request aggregate was created, but at least one locked child could not be created. Existing resources are retained. Inspect the aggregate identified by the response headers before taking recovery action; do not blindly recreate the request.",
+                        "headers": {
+                            "Location": {
+                                "required": true,
+                                "description": "Relative URL of the retained payment-request aggregate.",
+                                "schema": {
+                                    "type": "string",
+                                    "example": "/payment-requests/d290f1ee-6c54-4b01-90e6-d701748f0851"
+                                }
+                            },
+                            "X-FlowPay-Payment-Request-Id": {
+                                "required": true,
+                                "description": "Identifier of the retained payment-request aggregate.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "Error code."
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error description including the retained aggregate identifier and the upstream failure context."
+                                        }
+                                    },
+                                    "required": [
+                                        "code",
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
                     "default": {
                         "$ref": "#/components/responses/DefaultError"
                     }
